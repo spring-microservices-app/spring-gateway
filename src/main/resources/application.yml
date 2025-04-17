@@ -1,0 +1,27 @@
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  active:
+    profiles: ${ACTIVE_PROFILE:local}
+
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+        - id: stock-service
+          uri: lb://STOCK-SERVICE
+          predicates:
+            - Path=/stocks/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
