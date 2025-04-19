@@ -6,19 +6,31 @@ spring:
   application:
     name: api-gateway
   active:
-    profiles: ${ACTIVE_PROFILE:local}
+    profiles: ${ACTIVE_PROFILE:default}
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true           # Enable routing via service names
+          lower-case-service-id: true
+    
+      ignore-invalid-fields: true
+      default-filters:
+        - StripPrefix=1
+    
       routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/users/**
         - id: stock-service
-          uri: lb://STOCK-SERVICE
+          # uri: lb://stock-service
+          uri: http://localhost:8081/
           predicates:
             - Path=/stocks/**
+        - id: user-service
+          # uri: lb://user-service
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/users/**
+        
 
 eureka:
   client:
