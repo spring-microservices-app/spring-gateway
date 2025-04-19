@@ -47,7 +47,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-resolver-dns-native-macos</artifactId>
+			<version>4.1.100.Final</version> <!-- Match your Netty version -->
+			<classifier>osx-aarch_64</classifier> <!-- For M1/M2 Macs -->
+		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

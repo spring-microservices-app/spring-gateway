@@ -18,16 +18,26 @@ spring:
       ignore-invalid-fields: true
       default-filters:
         - StripPrefix=1
-    
+        - RemoveRequestHeader=Cookie
+        - RemoveRequestHeader=Set-Cookie
+        - RemoveRequestHeader=Authorization
+        - RemoveResponseHeader=Set-Cookie
+        - RemoveResponseHeader=Access-Control-Allow-Origin
+        - RemoveResponseHeader=Access-Control-Allow-Credentials
+        - RemoveResponseHeader=Access-Control-Allow-Headers
+        - RemoveResponseHeader=Access-Control-Allow-Methods
+        - RemoveResponseHeader=Access-Control-Max-Age
+        - RemoveResponseHeader=Access-Control-Expose-Headers
+
       routes:
         - id: stock-service
           # uri: lb://stock-service
-          uri: http://localhost:8081/
+          uri: http://localhost:8081
           predicates:
             - Path=/stocks/**
         - id: user-service
           # uri: lb://user-service
-          uri: http://localhost:8082/
+          uri: http://localhost:8082
           predicates:
             - Path=/users/**
         
